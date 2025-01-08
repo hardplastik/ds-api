@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ds-service
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: America/Tijuana
+    mapper:
+      default-view-inclusion: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://172.17.0.2:5432/postgres
+    username: postgres
+    password: mysecretpassword
+  jpa:
+    show-sql: false
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      hibernate.format_sql: false
+      hibernate.show_sql: false
+      hibernate.jdbc.time_zone: America/Tijuana
+
+  flyway:
+    out-of-order: true
+    ignore-missing-migrations: true
+
+  servlet:
+    session:
+      cookie:
+        http-only: true
+        secure: false
