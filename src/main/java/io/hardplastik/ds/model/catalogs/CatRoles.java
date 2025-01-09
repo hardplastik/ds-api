@@ -19,9 +19,9 @@ import lombok.Setter;
 public class CatRoles {
 
     @Id
+    @Column(name = "role_id")
     private UUID id;
-
-    @Column(nullable = false, length = 100)
+    
     private String name;
     
 }
