@@ -27,10 +27,6 @@ spring:
       hibernate.show_sql: false
       hibernate.jdbc.time_zone: America/Tijuana
 
-  flyway:
-    out-of-order: true
-    ignore-missing-migrations: true
-
   servlet:
     session:
       cookie:
