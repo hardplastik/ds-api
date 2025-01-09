@@ -7,6 +7,7 @@ import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -37,12 +38,12 @@ public class ProgramSessionTemplate {
     private ProgramTemplate programTemplate;
 
     @Column(name = "week_number")
-    private Short weekNumber;
+    private Integer weekNumber;
 
     @Column(name = "week_day")
-    private Short weekDay;
+    private Integer weekDay;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_template_id")
     private List<ProgramSessionTemplateExercise> exercises;
     

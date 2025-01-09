@@ -2,6 +2,8 @@ package io.hardplastik.ds.model.catalogs;
 
 import java.util.UUID;
 
+import org.hibernate.annotations.UuidGenerator;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,6 +21,7 @@ import lombok.Setter;
 public class CatRoles {
 
     @Id
+    @UuidGenerator
     @Column(name = "role_id")
     private UUID id;
     

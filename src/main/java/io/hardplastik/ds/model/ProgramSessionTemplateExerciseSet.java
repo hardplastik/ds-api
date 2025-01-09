@@ -9,10 +9,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
@@ -33,10 +34,7 @@ public class ProgramSessionTemplateExerciseSet implements Serializable {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns({
-        @JoinColumn(name = "program_session_template_id"),
-        @JoinColumn(name = "exercise_id")
-    })
+    @JoinColumn(name = "program_session_template_exercise_id")
     private ProgramSessionTemplateExercise exercise;
 
     @Column(name = "target_reps")
@@ -47,5 +45,6 @@ public class ProgramSessionTemplateExerciseSet implements Serializable {
 
     private Integer rpe;
 
-    private String unit;
+    @Enumerated(EnumType.STRING)
+    private WeightUnit unit;
 }

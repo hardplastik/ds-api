@@ -2,16 +2,17 @@ package io.hardplastik.ds.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.UuidGenerator;
+
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
-import io.hardplastik.ds.model.Serializable.ProgramSessionExercisePk;
 import io.hardplastik.ds.model.catalogs.CatExercise;
 import jakarta.persistence.Column;
-import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
@@ -25,16 +26,17 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "program_session_exercise")
-@EqualsAndHashCode(of = "pk")
+@EqualsAndHashCode(of = "id")
 public class ProgramSessionExercise implements Serializable {
 
-    @EmbeddedId
-    @JsonIgnore
-    private ProgramSessionExercisePk pk;
+    @Id
+    @UuidGenerator
+    @Column(name = "program_session_exercise_id")
+    private UUID id;
 
     @JsonUnwrapped
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exercise_id", insertable = false, updatable = false)
+    @JoinColumn(name = "exercise_id")
     private CatExercise exercise;
 
     @Column(name = "order_number")
@@ -43,11 +45,6 @@ public class ProgramSessionExercise implements Serializable {
     private String notes;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumns(
-        value = {
-            @JoinColumn(name = "program_session_id"),
-            @JoinColumn(name = "exercise_id")
-        }
-    )
+    @JoinColumn(name = "program_session_exercise_id")
     private List<ProgramSessionExerciseSet> sets;
 }

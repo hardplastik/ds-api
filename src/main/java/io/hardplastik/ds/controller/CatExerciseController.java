@@ -4,23 +4,32 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.hardplastik.ds.controller.command.CatExerciseCommand;
+import io.hardplastik.ds.data.CatExerciseRepository;
 import io.hardplastik.ds.model.catalogs.CatExercise;
-import io.hardplastik.ds.service.CatExerciseService;
+
 
 @RestController
-@RequestMapping("/api/exercise")
+@RequestMapping("/api/exercises")
 public class CatExerciseController {
 
     @Autowired
-    private CatExerciseService catExerciseService;
+    private CatExerciseRepository repository;
 
     @GetMapping("")
     public List<CatExercise> getAllCatExercises() {
-        return catExerciseService.getAllCatExercises();
+        return repository.findAll();
     }
-    
-    
+
+    @PostMapping("")
+    public CatExercise postMethodName(@RequestBody CatExerciseCommand command) {
+        CatExercise exercise = command.toEntity();
+        return repository.save(exercise);
+    }
+
 }
