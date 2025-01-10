@@ -1,6 +1,8 @@
 package io.hardplastik.ds.model;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
@@ -23,13 +25,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "user")
-public class User {
+@Table(name = "account")
+public class Account {
 
     @Id
-    @UuidGenerator()
-    @Column(name = "user_id")
-    private String id;
+    @UuidGenerator
+    @Column(name = "account_id")
+    private UUID id;
 
     private String username;
     
@@ -47,6 +49,9 @@ public class User {
     private Boolean deleted;
     
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private Collection<UserRole> roles;
+    @JoinColumn(name = "account_id")
+    private Collection<AccountRole> roles;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

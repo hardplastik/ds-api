@@ -1,5 +1,5 @@
-CREATE TABLE "user" (
-    user_id UUID CONSTRAINT pk_user PRIMARY KEY,
+CREATE TABLE account (
+    account_id UUID CONSTRAINT pk_user PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
     password_salt VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
@@ -15,10 +15,10 @@ CREATE TABLE cat_roles (
 );
 
 CREATE TABLE user_role (
-    user_id UUID NOT NULL,
+    account_id UUID NOT NULL,
     role_id UUID NOT NULL,
-    CONSTRAINT pk_user_role PRIMARY KEY (user_id, role_id),
-    CONSTRAINT user_role_fk01 FOREIGN KEY (user_id) REFERENCES "user"(user_id),
+    CONSTRAINT pk_user_role PRIMARY KEY (account_id, role_id),
+    CONSTRAINT user_role_fk01 FOREIGN KEY (account_id) REFERENCES account(account_id),
     CONSTRAINT user_role_fk02 FOREIGN KEY (role_id) REFERENCES cat_roles(role_id)
 );
 
@@ -31,9 +31,9 @@ CREATE TABLE cat_exercise (
 
 CREATE TABLE user_program (
     user_program_id UUID CONSTRAINT pk_user_program PRIMARY KEY,
-    user_id UUID NOT NULL,
+    account_id UUID NOT NULL,
     enroll_datetime TIMESTAMP NOT NULL,
-    CONSTRAINT user_program_fk01 FOREIGN KEY (user_id) REFERENCES "user"(user_id)
+    CONSTRAINT user_program_fk01 FOREIGN KEY (account_id) REFERENCES account(account_id)
 );
 
 CREATE TABLE program_session (

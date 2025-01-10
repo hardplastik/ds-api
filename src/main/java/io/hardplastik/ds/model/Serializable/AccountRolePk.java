@@ -16,13 +16,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-@EqualsAndHashCode(of = {"userId", "roleId"})
-public class UserRolePk implements Serializable {
+@EqualsAndHashCode(of = {"accountId", "roleId"})
+public class AccountRolePk implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @JoinColumn(name = "user_id")
-    private String userId;
+    @JoinColumn(name = "account_id")
+    private String accountId;
 
     @Column(name = "role_id")
     private String roleId;

@@ -38,8 +38,8 @@ public class UserProgram {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "account_id")
+    private Account user;
 
     @Column(name = "enroll_datetime")
     private LocalDateTime enrollDatetime;

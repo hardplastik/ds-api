@@ -2,11 +2,10 @@ package io.hardplastik.ds.model;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
-import io.hardplastik.ds.model.Serializable.UserRolePk;
+import io.hardplastik.ds.model.Serializable.AccountRolePk;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -18,12 +17,12 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_role")
+@Table(name = "account_role")
 @EqualsAndHashCode(of = "pk")
-public class UserRole {
+public class AccountRole {
 
     @EmbeddedId
     @JsonUnwrapped
-    private UserRolePk pk;
+    private AccountRolePk pk;
 
 }
