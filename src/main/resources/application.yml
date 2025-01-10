@@ -6,6 +6,9 @@ server:
 
 
 spring:
+  security:
+    token-secret: 65beba6603e2832600884258b802c77b03842caffb88ddba414dca6221d83a3b
+    token-expiration: 525960
   application:
     name: ds-service
   jackson:

@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "account_role")
+@Table(name = "user_role")
 @EqualsAndHashCode(of = "pk")
 public class AccountRole {
 

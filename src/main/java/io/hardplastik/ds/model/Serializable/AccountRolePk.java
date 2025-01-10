@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,7 +20,7 @@ public class AccountRolePk implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @JoinColumn(name = "account_id")
+    @Column(name = "account_id")
     private String accountId;
 
     @Column(name = "role_id")
