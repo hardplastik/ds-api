@@ -57,7 +57,7 @@ public class AuthController {
 
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public TokenResponseCommand login(@RequestBody LoginCommand command) {
 
         Account account = repository

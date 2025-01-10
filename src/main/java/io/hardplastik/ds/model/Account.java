@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -59,4 +58,8 @@ public class Account {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    public Account(UUID id) {
+        this.id = id;
+    }
 }

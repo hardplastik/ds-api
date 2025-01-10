@@ -36,15 +36,17 @@ public class ProgramSessionExerciseSet {
     @JoinColumn(name = "program_session_exercise_id")
     private ProgramSessionExercise exercise;
 
+    @Column(name = "reps")
     private Integer reps;
 
     @Column(name = "target_reps")
     private String targetReps;
 
+    @Column(name = "weight")
     private Float weight;
 
     @Column(name = "target_weight")
-    private String targetWeight;
+    private Float targetWeight;
 
     private Integer rpe;
 

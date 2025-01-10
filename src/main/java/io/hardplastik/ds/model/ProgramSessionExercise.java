@@ -6,9 +6,10 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.hardplastik.ds.model.catalogs.CatExercise;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +34,11 @@ public class ProgramSessionExercise implements Serializable {
     @Column(name = "program_session_exercise_id")
     private UUID id;
 
-    @JsonUnwrapped
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "program_session_id")
+    private ProgramSession session;
+    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exercise_id")
     private CatExercise exercise;
@@ -43,7 +48,7 @@ public class ProgramSessionExercise implements Serializable {
 
     private String notes;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_exercise_id")
     private List<ProgramSessionExerciseSet> sets;
 }

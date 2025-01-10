@@ -1,6 +1,7 @@
 package io.hardplastik.ds.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,11 @@ public class CatExerciseController {
     @GetMapping("")
     public List<CatExercise> getAllCatExercises() {
         return repository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    private CatExercise getExerciseById(UUID id) {
+        return repository.findById(id).orElse(null);
     }
 
     @PostMapping("")
