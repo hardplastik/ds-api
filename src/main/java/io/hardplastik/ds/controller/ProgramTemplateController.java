@@ -14,7 +14,7 @@ import io.hardplastik.ds.data.ProgramTemplateRepository;
 import io.hardplastik.ds.model.ProgramTemplate;
 
 @RestController
-@RequestMapping("/api/programs/templates")
+@RequestMapping("/programs/templates")
 public class ProgramTemplateController {
     
     @Autowired
@@ -30,6 +30,5 @@ public class ProgramTemplateController {
         ProgramTemplate template = command.toEntity();
         return repository.save(template);
     }
-    
 
 }

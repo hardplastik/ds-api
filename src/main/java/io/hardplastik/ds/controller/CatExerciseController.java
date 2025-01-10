@@ -14,7 +14,7 @@ import io.hardplastik.ds.data.CatExerciseRepository;
 import io.hardplastik.ds.model.catalogs.CatExercise;
 
 @RestController
-@RequestMapping("/api/exercises")
+@RequestMapping("/exercises")
 public class CatExerciseController {
 
     @Autowired
