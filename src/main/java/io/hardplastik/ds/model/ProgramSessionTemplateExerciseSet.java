@@ -47,4 +47,8 @@ public class ProgramSessionTemplateExerciseSet implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private WeightUnit unit;
+
+    @Column(name = "order_number")
+    private Integer orderNumber;
+
 }

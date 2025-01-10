@@ -10,6 +10,7 @@ import io.hardplastik.ds.model.ProgramSessionTemplateExerciseSet;
 import io.hardplastik.ds.model.ProgramTemplate;
 import io.hardplastik.ds.model.WeightUnit;
 import io.hardplastik.ds.model.catalogs.CatExercise;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -100,6 +101,8 @@ public class ProgramTemplateCommand {
 
         private WeightUnit unit;
 
+        private Integer orderNumber;
+
         public ProgramSessionTemplateExerciseSet toEntity(ProgramSessionTemplateExercise exercise) {
             ProgramSessionTemplateExerciseSet set = new ProgramSessionTemplateExerciseSet();
             set.setExercise(exercise);
@@ -107,6 +110,7 @@ public class ProgramTemplateCommand {
             set.setTargetWeight(targetWeight);
             set.setRpe(rpe);
             set.setUnit(unit);
+            set.setOrderNumber(orderNumber);
             return set;
         }
 

@@ -13,7 +13,6 @@ import io.hardplastik.ds.controller.command.CatExerciseCommand;
 import io.hardplastik.ds.data.CatExerciseRepository;
 import io.hardplastik.ds.model.catalogs.CatExercise;
 
-
 @RestController
 @RequestMapping("/api/exercises")
 public class CatExerciseController {
@@ -27,7 +26,7 @@ public class CatExerciseController {
     }
 
     @PostMapping("")
-    public CatExercise postMethodName(@RequestBody CatExerciseCommand command) {
+    public CatExercise addExercise(@RequestBody CatExerciseCommand command) {
         CatExercise exercise = command.toEntity();
         return repository.save(exercise);
     }

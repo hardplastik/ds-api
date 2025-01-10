@@ -13,8 +13,6 @@ import io.hardplastik.ds.controller.command.ProgramTemplateCommand;
 import io.hardplastik.ds.data.ProgramTemplateRepository;
 import io.hardplastik.ds.model.ProgramTemplate;
 
-
-
 @RestController
 @RequestMapping("/api/programs/templates")
 public class ProgramTemplateController {
@@ -25,8 +23,7 @@ public class ProgramTemplateController {
     @GetMapping("")
     public List<ProgramTemplate> list() {
         return repository.findAll();
-    }
-    
+    }    
 
     @PostMapping("")
     public ProgramTemplate addProgramTemplate(@RequestBody ProgramTemplateCommand command) {
