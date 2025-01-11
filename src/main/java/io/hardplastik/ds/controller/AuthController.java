@@ -71,10 +71,10 @@ public class AuthController {
         }
 
         TokenResponseCommand response = new TokenResponseCommand();
-        response.setToken(jwtService.buildToken(account));
         account.setPasswordHash(null);
         account.setPasswordSalt(null);
         response.setAccount(account);
+        response.setToken(jwtService.generateToken(account));
         return response;
     }
     

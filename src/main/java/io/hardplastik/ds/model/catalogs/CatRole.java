@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "cat_roles")
 @EqualsAndHashCode(of = "id")
-public class CatRoles {
+public class CatRole {
 
     @Id
     @UuidGenerator

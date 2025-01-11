@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.hardplastik.ds.controller.command.CatRolesCommand;
 import io.hardplastik.ds.data.CatRolesRepository;
-import io.hardplastik.ds.model.catalogs.CatRoles;
+import io.hardplastik.ds.model.catalogs.CatRole;
 
 @RestController
 @RequestMapping("/roles")
@@ -21,13 +21,13 @@ public class CatRolesController {
     private CatRolesRepository repository;
 
     @GetMapping("")
-    public List<CatRoles> listRoles() {
+    public List<CatRole> listRoles() {
         return repository.findAll();
     }
 
     @PostMapping("")
-    public CatRoles addRole(@RequestBody CatRolesCommand command) {
-        CatRoles newRole = command.toEntity();
+    public CatRole addRole(@RequestBody CatRolesCommand command) {
+        CatRole newRole = command.toEntity();
         return repository.save(newRole);
     }
     
