@@ -8,9 +8,8 @@ import io.hardplastik.ds.model.ProgramSessionTemplate;
 import io.hardplastik.ds.model.ProgramSessionTemplateExercise;
 import io.hardplastik.ds.model.ProgramSessionTemplateExerciseSet;
 import io.hardplastik.ds.model.ProgramTemplate;
-import io.hardplastik.ds.model.WeightUnit;
 import io.hardplastik.ds.model.catalogs.CatExercise;
-
+import io.hardplastik.ds.model.enums.WeightUnit;
 import lombok.Getter;
 import lombok.Setter;
 

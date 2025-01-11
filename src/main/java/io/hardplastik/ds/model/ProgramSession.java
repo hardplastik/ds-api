@@ -43,16 +43,19 @@ public class ProgramSession {
     private UserProgram userProgram;
 
     @Column(name = "week_number")
-    private Short weekNumber;
+    private Integer weekNumber;
 
     @Column(name = "week_day")
-    private Short weekDay;
+    private Integer weekDay;
 
     @Column(name = "start_datetime")
     private LocalDateTime startDatetime;
 
     @Column(name = "end_datetime")
     private LocalDateTime endDatetime;
+
+    @Column(name = "ps_status")
+    private Boolean psStatus;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_id")

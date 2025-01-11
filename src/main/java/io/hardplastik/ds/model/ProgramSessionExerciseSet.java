@@ -1,11 +1,11 @@
 package io.hardplastik.ds.model;
 
 import java.util.UUID;
-
 import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.hardplastik.ds.model.enums.WeightUnit;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -55,5 +55,8 @@ public class ProgramSessionExerciseSet {
 
     @Column(name = "order_number")
     private Integer orderNumber;
+
+    @Column(name = "pses_status")
+    private Boolean psesStatus;
 
 }

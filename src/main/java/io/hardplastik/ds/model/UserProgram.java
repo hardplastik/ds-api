@@ -45,6 +45,9 @@ public class UserProgram {
     @Column(name = "enroll_datetime")
     private LocalDateTime enrollDatetime;
 
+    @Column(name = "program_status")
+    private Boolean programStatus;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_program_id")
     private List<ProgramSession> sessions;

@@ -10,9 +10,8 @@ import io.hardplastik.ds.model.ProgramSession;
 import io.hardplastik.ds.model.ProgramSessionExercise;
 import io.hardplastik.ds.model.ProgramSessionExerciseSet;
 import io.hardplastik.ds.model.UserProgram;
-import io.hardplastik.ds.model.WeightUnit;
 import io.hardplastik.ds.model.catalogs.CatExercise;
-
+import io.hardplastik.ds.model.enums.WeightUnit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,6 +29,7 @@ public class UserProgramCommand {
 
         userProgram.setUser(new Account(accountId));
         userProgram.setEnrollDatetime(LocalDateTime.now());
+        userProgram.setProgramStatus(false);
         userProgram.setSessions(sessions
             .stream()
             .map(session -> session.toEntity(userProgram))
@@ -42,13 +42,9 @@ public class UserProgramCommand {
     @Setter
     public static class ProgramSessionCommand {
 
-        private Short weekNumber;
+        private Integer weekNumber;
 
-        private Short weekDay;
-
-        private String startDatetime;
-
-        private String endDatetime;
+        private Integer weekDay;
 
         private List<ProgramSessionExerciseCommand> sessions;
 
@@ -58,8 +54,7 @@ public class UserProgramCommand {
             session.setUserProgram(userProgram);
             session.setWeekNumber(weekNumber);
             session.setWeekDay(weekDay);
-            session.setStartDatetime(LocalDateTime.parse(startDatetime));
-            session.setEndDatetime(LocalDateTime.parse(endDatetime));
+            session.setPsStatus(false);
             session.setExercises(sessions
                 .stream()
                 .map(exercise -> exercise.toEntity(session))
@@ -90,6 +85,7 @@ public class UserProgramCommand {
             exercise.setExercise(new CatExercise(exerciseId));
             exercise.setOrderNumber(orderNumber);
             exercise.setNotes(notes);
+            exercise.setPseStatus(false);
             exercise.setSets(sets
                 .stream()
                 .map(set -> set.toEntity(exercise))
@@ -130,6 +126,7 @@ public class UserProgramCommand {
             set.setRpe(rpe);
             set.setUnit(unit);
             set.setOrderNumber(orderNumber);
+            set.setPsesStatus(false);
             
             return set;
         }

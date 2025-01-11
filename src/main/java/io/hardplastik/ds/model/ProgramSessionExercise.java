@@ -46,7 +46,11 @@ public class ProgramSessionExercise implements Serializable {
     @Column(name = "order_number")
     private int orderNumber;
 
+    @Column(name = "notes")
     private String notes;
+
+    @Column(name = "pse_status")
+    private Boolean pseStatus;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_exercise_id")
