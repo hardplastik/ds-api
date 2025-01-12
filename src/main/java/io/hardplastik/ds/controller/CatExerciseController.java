@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.hardplastik.ds.controller.command.CatExerciseCommand;
-import io.hardplastik.ds.controller.error.BusinessLogicException;
+import io.hardplastik.ds.controller.error.NotFoundException;
 import io.hardplastik.ds.data.CatExerciseRepository;
 import io.hardplastik.ds.model.catalogs.CatExercise;
 
@@ -32,7 +31,7 @@ public class CatExerciseController {
     @GetMapping("/{id}")
     public CatExercise getExerciseById(@PathVariable UUID id) {
         return repository.findById(id)
-            .orElseThrow(() -> new BusinessLogicException("Exercise not found", HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new NotFoundException("Exercise not found"));
     }
 
     @PostMapping("")

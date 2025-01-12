@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.hardplastik.ds.controller.command.CreatedUserProgram;
 import io.hardplastik.ds.controller.command.UserProgramCommand;
 import io.hardplastik.ds.controller.error.BusinessLogicException;
+import io.hardplastik.ds.controller.error.NotFoundException;
 import io.hardplastik.ds.data.AccountRepository;
 import io.hardplastik.ds.data.ProgramTemplateRepository;
 import io.hardplastik.ds.data.UserProgramRepository;
@@ -62,14 +63,14 @@ public class UserProgramController {
     @PostMapping("/{templateId}/program")
     public UserProgram addProgramToUserProgram(@PathVariable UUID templateId, @RequestBody CreatedUserProgram command) {
 
-        Account account = accountRepository.findById(command.getAccountId())
-                .orElseThrow(() -> new BusinessLogicException("account not found", HttpStatus.NOT_FOUND));
-
         ProgramTemplate programTemplate = programTemplateRepository.findById(templateId)
-                .orElseThrow(() -> new BusinessLogicException("program template not found", HttpStatus.NOT_FOUND));
+            .orElseThrow(() -> new NotFoundException("program template not found"));
+
+        Account account = accountRepository.findById(command.getAccountId())
+            .orElseThrow(() -> new BusinessLogicException("account not found", HttpStatus.BAD_REQUEST));
 
         return userProgramRepository
-                .save(userProgramService.createProgramForUser(account.getId(), programTemplate));
+            .save(userProgramService.createProgramForUser(account.getId(), programTemplate));
     }
 
 }

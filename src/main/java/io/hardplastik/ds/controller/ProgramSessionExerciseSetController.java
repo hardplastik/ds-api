@@ -3,6 +3,7 @@ package io.hardplastik.ds.controller;
 import io.hardplastik.ds.controller.command.PSExerciseSetCommand;
 import io.hardplastik.ds.controller.command.PSExerciseSetComplent;
 import io.hardplastik.ds.controller.error.BusinessLogicException;
+import io.hardplastik.ds.controller.error.NotFoundException;
 import io.hardplastik.ds.data.ProgramSessionExerciseSetRepository;
 import io.hardplastik.ds.model.ProgramSessionExerciseSet;
 import jakarta.transaction.Transactional;
@@ -49,15 +50,15 @@ public class ProgramSessionExerciseSetController {
     }
 
     @Transactional
-    @PostMapping("/complete")
-    public ProgramSessionExerciseSet completeProgramSessionExerciseSet(@RequestBody PSExerciseSetComplent command) {
+    @PutMapping("/{id}")
+    public ProgramSessionExerciseSet completeProgramSessionExerciseSet(@PathVariable UUID id, @RequestBody PSExerciseSetComplent command) {
         ProgramSessionExerciseSet programSessionExerciseSet = programSessionExerciseSetRepository
-                .findById(command.getExerciseSetId()).orElse(null);
-
+            .findById(id).orElseThrow(() -> new NotFoundException("Program Session Exercise Set not found"));
+        
         programSessionExerciseSet.setReps(command.getReps());
         programSessionExerciseSet.setWeight(command.getWeight());
         programSessionExerciseSet.setRpe(command.getRpe());
-        programSessionExerciseSet.setPsesStatus(true);
+        programSessionExerciseSet.setPsesStatus(command.getPsesStatus());
 
         return programSessionExerciseSetRepository.save(programSessionExerciseSet);
     }
