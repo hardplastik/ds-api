@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.hardplastik.ds.controller.command.CustomerDataCommand;
@@ -17,26 +18,24 @@ import io.hardplastik.ds.model.Account;
 import io.hardplastik.ds.model.CustomerData;
 import jakarta.transaction.Transactional;
 
-
-
-
 @RestController
-public class AccountController {
+@RequestMapping("/clients")
+public class ClientController {
   
   @Autowired
   private AccountRepository repository;
   
-  @GetMapping("/clients")
+  @GetMapping("")
   public List<Account> listClients() {
       return repository.findAll();
   }
   
   @Transactional
-  @PutMapping("/clients/{id}/info")
-  public Account getMethodName(@PathVariable UUID id, @RequestBody CustomerDataCommand command) {
+  @PutMapping("/{id}")
+  public Account updateClientAccount(@PathVariable UUID id, @RequestBody CustomerDataCommand command) {
 
       Account account = repository.findById(id)
-        .orElseThrow(() -> new NotFoundException("Account not found"));
+        .orElseThrow(() -> new NotFoundException("client not found"));
         
       CustomerData customer = account.getCustomer() != null 
         ? command.merge(account.getCustomer()) 
@@ -47,5 +46,12 @@ public class AccountController {
 
       return repository.save(account);
   }
+
+  @GetMapping("/{id}")
+  public Account getClientAccount(@PathVariable UUID id) {
+      return repository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Account not found"));
+  }
+  
 
 }
