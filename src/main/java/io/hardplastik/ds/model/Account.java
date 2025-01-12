@@ -1,6 +1,7 @@
 package io.hardplastik.ds.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +15,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import io.hardplastik.ds.model.Serializable.AccountRolePk;
 import io.hardplastik.ds.model.catalogs.CatRole;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,7 +42,6 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @Table(name = "account")
 @ToString
-@JsonInclude(value = Include.NON_ABSENT)
 public class Account implements UserDetails {
 
     @Id
@@ -47,11 +49,19 @@ public class Account implements UserDetails {
     @Column(name = "account_id")
     private UUID id;
 
+    @JsonUnwrapped
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id")
+    private List<CustomerData> customers;
+
     private String username;
     
+    @JsonIgnore
     @Column(name = "password_salt")
     private String passwordSalt;
 
+    @JsonIgnore
     @Column(name = "password_hash")
     private String passwordHash;
 
@@ -77,6 +87,18 @@ public class Account implements UserDetails {
         this.id = id;
     }
 
+    public void setCustomer(CustomerData customer) {
+        if (customers == null) {
+            customers = new ArrayList<>();
+        }
+        customers.set(0, customer);
+    }
+
+    @JsonUnwrapped
+    public CustomerData getCustomer() {
+        return customers != null && !customers.isEmpty() ? customers.get(0) : new CustomerData();
+    }
+
     public void setAuthorities(List<String> authorities) {
         Collection<AccountRole> roles = authorities
         .stream()
@@ -99,6 +121,7 @@ public class Account implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return passwordHash;
     }

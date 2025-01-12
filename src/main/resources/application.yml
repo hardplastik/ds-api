@@ -14,8 +14,6 @@ spring:
     serialization:
       write-dates-as-timestamps: false
     time-zone: America/Tijuana
-    mapper:
-      default-view-inclusion: true
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://127.0.0.1:5432/postgres
@@ -30,8 +28,6 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-      hibernate.format_sql: false
-      hibernate.show_sql: false
       hibernate.jdbc.time_zone: America/Tijuana
 
   servlet:
