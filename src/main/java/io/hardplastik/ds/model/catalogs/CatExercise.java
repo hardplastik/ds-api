@@ -1,12 +1,17 @@
 package io.hardplastik.ds.model.catalogs;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,6 +41,10 @@ public class CatExercise {
 
     @Column(name = "media_url")
     private String mediaUrl;
+
+    @JoinColumn(name = "exercise_id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    private List<CatExerciseMuscleGroup> groups;
     
     public CatExercise(UUID id) {
         this.id = id;
