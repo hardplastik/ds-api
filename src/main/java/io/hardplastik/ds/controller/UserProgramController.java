@@ -16,12 +16,13 @@ import io.hardplastik.ds.controller.command.CreatedUserProgram;
 import io.hardplastik.ds.controller.command.UserProgramCommand;
 import io.hardplastik.ds.controller.error.BusinessLogicException;
 import io.hardplastik.ds.data.AccountRepository;
+import io.hardplastik.ds.data.ProgramTemplateRepository;
 import io.hardplastik.ds.data.UserProgramRepository;
 import io.hardplastik.ds.model.Account;
 import io.hardplastik.ds.model.ProgramTemplate;
 import io.hardplastik.ds.model.UserProgram;
-import io.hardplastik.ds.service.ProgramTemplateService;
 import io.hardplastik.ds.service.UserProgramService;
+
 import jakarta.transaction.Transactional;
 
 @RestController
@@ -35,7 +36,7 @@ public class UserProgramController {
     private UserProgramRepository userProgramRepository;
 
     @Autowired
-    private ProgramTemplateService programTemplateService;
+    private ProgramTemplateRepository programTemplateRepository;
 
     @Autowired
     private UserProgramService userProgramService;
@@ -61,19 +62,14 @@ public class UserProgramController {
     @PostMapping("/{templateId}/program")
     public UserProgram addProgramToUserProgram(@PathVariable UUID templateId, @RequestBody CreatedUserProgram command) {
 
-        Account account = accountRepository.findById(command.getAccountId()).orElse(null);
+        Account account = accountRepository.findById(command.getAccountId())
+                .orElseThrow(() -> new BusinessLogicException("account not found", HttpStatus.NOT_FOUND));
 
-        if (account == null) {
-            throw new BusinessLogicException("account not found", HttpStatus.NOT_FOUND);
-        }
+        ProgramTemplate programTemplate = programTemplateRepository.findById(templateId)
+                .orElseThrow(() -> new BusinessLogicException("program template not found", HttpStatus.NOT_FOUND));
 
-        ProgramTemplate programTemplate = programTemplateService.findProgramTemplateById(templateId);
-
-        if (programTemplate == null) {
-            throw new BusinessLogicException("program template not found", HttpStatus.NOT_FOUND);
-        }
-
-        return userProgramRepository.save(userProgramService.createProgramForUser(command.getAccountId(), programTemplate));
+        return userProgramRepository
+                .save(userProgramService.createProgramForUser(account.getId(), programTemplate));
     }
-    
+
 }
