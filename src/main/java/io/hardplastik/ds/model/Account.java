@@ -67,6 +67,9 @@ public class Account implements UserDetails {
     @JoinColumn(name = "account_id")
     private Collection<AccountRole> roles;
 
+    @Column(name = "is_trainer")
+    private Boolean isTrainer;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
