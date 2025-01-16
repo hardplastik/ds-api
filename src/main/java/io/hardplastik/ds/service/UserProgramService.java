@@ -21,7 +21,7 @@ public class UserProgramService {
 
     public UserProgram createProgramForUser(UUID accountId, ProgramTemplate programTemplate) {
         
-        UserProgram userProgram = initializeUserProgram(accountId, programTemplate.getName());
+        UserProgram userProgram = initializeUserProgram(accountId, programTemplate);
 
         programTemplate.getSessions()
         .forEach(templateSession -> {
@@ -49,14 +49,17 @@ public class UserProgramService {
 
     }
 
-    private UserProgram initializeUserProgram(UUID accountId, String name) {
+    private UserProgram initializeUserProgram(UUID accountId, ProgramTemplate programTemplate) {
 
         UserProgram userProgram = new UserProgram();
         userProgram.setUser(new Account(accountId));
         userProgram.setEnrollDatetime(LocalDateTime.now());
-        userProgram.setIsStarted(false);
+        userProgram.setIsStarted(Boolean.FALSE);
+        userProgram.setIsCompleted(Boolean.FALSE);
         userProgram.setSessions(new ArrayList<>());
-        userProgram.setName(name);
+        userProgram.setName(programTemplate.getName());
+        userProgram.setWeeks(programTemplate.getWeeks());
+        userProgram.setSessionsPerWeek(programTemplate.getSessionsPerWeek());
         return userProgram;
 
     }
@@ -67,7 +70,7 @@ public class UserProgramService {
         session.setUserProgram(userProgram);
         session.setWeekNumber(templateSession.getWeekNumber());
         session.setWeekDay(templateSession.getWeekDay());
-        session.setPsStatus(false);
+        session.setIsCompleted(Boolean.FALSE);
         session.setExercises(new ArrayList<>());
         return session;
     }
@@ -79,7 +82,7 @@ public class UserProgramService {
         sessionExercise.setExercise(templateExercise.getExercise());
         sessionExercise.setOrderNumber(templateExercise.getOrderNumber());
         sessionExercise.setNotes(templateExercise.getNotes());
-        sessionExercise.setPseStatus(false);
+        sessionExercise.setIsCompleted(Boolean.FALSE);
         sessionExercise.setSets(new ArrayList<>());
         return sessionExercise;
     }
@@ -96,7 +99,7 @@ public class UserProgramService {
         set.setRpe(templateSet.getRpe());
         set.setUnit(templateSet.getUnit());
         set.setOrderNumber(templateSet.getOrderNumber());
-        set.setPsesStatus(false);
+        set.setIsCompleted(Boolean.FALSE);
         return set;
 
     }

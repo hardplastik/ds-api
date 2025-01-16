@@ -44,7 +44,7 @@ public class ProgramSessionExerciseSetController {
         programSessionExerciseSet.setRpe(null);
         programSessionExerciseSet.setUnit(command.getUnit());
         programSessionExerciseSet.setOrderNumber(programSessionExerciseSets.size() + 1);
-        programSessionExerciseSet.setPsesStatus(false);
+        programSessionExerciseSet.setIsCompleted(Boolean.FALSE);
 
         return programSessionExerciseSetRepository.save(programSessionExerciseSet);
     }
@@ -58,7 +58,7 @@ public class ProgramSessionExerciseSetController {
         programSessionExerciseSet.setReps(command.getReps());
         programSessionExerciseSet.setWeight(command.getWeight());
         programSessionExerciseSet.setRpe(command.getRpe());
-        programSessionExerciseSet.setPsesStatus(command.getPsesStatus());
+        programSessionExerciseSet.setIsCompleted(command.getIsCompleted());
 
         return programSessionExerciseSetRepository.save(programSessionExerciseSet);
     }

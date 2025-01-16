@@ -32,6 +32,11 @@ public class ProgramTemplate {
     private String name;
 
     private String description;
+
+    private Integer weeks;
+
+    @Column(name = "sessions_per_week")
+    private Integer sessionsPerWeek;
     
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_template_id")

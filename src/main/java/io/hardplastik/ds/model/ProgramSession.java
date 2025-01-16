@@ -54,9 +54,10 @@ public class ProgramSession {
     @Column(name = "end_datetime")
     private LocalDateTime endDatetime;
 
-    @Column(name = "ps_status")
-    private Boolean psStatus;
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_id")
     private List<ProgramSessionExercise> exercises;

@@ -49,8 +49,8 @@ public class ProgramSessionExercise implements Serializable {
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "pse_status")
-    private Boolean pseStatus;
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_exercise_id")

@@ -2,6 +2,7 @@ package io.hardplastik.ds.controller.command;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,26 @@ public class UserProgramCommand {
         userProgram.setUser(new Account(accountId));
         userProgram.setName(name);
         userProgram.setEnrollDatetime(LocalDateTime.now());
-        userProgram.setIsStarted(false);
+        userProgram.setIsStarted(Boolean.FALSE);
+        userProgram.setIsCompleted(Boolean.FALSE);
+        
+        Integer weeks = sessions.stream()
+            .map(ProgramSessionCommand::getWeekNumber)
+            .reduce(0, (a, b) -> a > b ? a : b);
+        
+        userProgram.setWeeks(weeks);
+
+        Map<Integer, List<ProgramSessionCommand>> weeksSessions = sessions
+            .stream()
+            .collect(Collectors.groupingBy(ProgramSessionCommand::getWeekNumber));
+
+        Integer sessionsPerWeek = weeksSessions
+            .keySet()
+            .stream()
+            .reduce(0, (a, key) -> a > weeksSessions.get(key).size() ? a : weeksSessions.get(key).size());
+        
+        userProgram.setSessionsPerWeek(sessionsPerWeek);
+
         userProgram.setSessions(sessions
             .stream()
             .map(session -> session.toEntity(userProgram))
@@ -57,7 +77,7 @@ public class UserProgramCommand {
             session.setUserProgram(userProgram);
             session.setWeekNumber(weekNumber);
             session.setWeekDay(weekDay);
-            session.setPsStatus(false);
+            session.setIsCompleted(Boolean.FALSE);
             session.setExercises(exercises
                 .stream()
                 .map(exercise -> exercise.toEntity(session))
@@ -88,7 +108,7 @@ public class UserProgramCommand {
             exercise.setExercise(new CatExercise(exerciseId));
             exercise.setOrderNumber(orderNumber);
             exercise.setNotes(notes);
-            exercise.setPseStatus(false);
+            exercise.setIsCompleted(Boolean.FALSE);
             exercise.setSets(sets
                 .stream()
                 .map(set -> set.toEntity(exercise))
@@ -129,7 +149,7 @@ public class UserProgramCommand {
             set.setRpe(rpe);
             set.setUnit(unit);
             set.setOrderNumber(orderNumber);
-            set.setPsesStatus(false);
+            set.setIsCompleted(Boolean.FALSE);
             
             return set;
         }

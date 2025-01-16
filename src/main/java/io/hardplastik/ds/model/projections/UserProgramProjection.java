@@ -12,6 +12,12 @@ public interface UserProgramProjection {
   LocalDateTime getEnrollDatetime();
   
   Boolean getIsStarted();
+
+  Boolean getIsCompleted();
+
+  Integer getWeeks();
+
+  Integer getSessionsPerWeek();
   
   UserProjection getUser();
 }

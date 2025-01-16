@@ -58,7 +58,7 @@ public class ProgramSessionExerciseSet {
     @Column(name = "order_number")
     private Integer orderNumber;
 
-    @Column(name = "pses_status")
-    private Boolean psesStatus;
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
 
 }

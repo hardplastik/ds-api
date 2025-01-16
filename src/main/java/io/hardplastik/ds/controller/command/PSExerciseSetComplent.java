@@ -13,6 +13,6 @@ public class PSExerciseSetComplent {
 
     private Integer rpe;
 
-    private Boolean psesStatus;
+    private Boolean isCompleted;
 
 }

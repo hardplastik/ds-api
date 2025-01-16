@@ -50,6 +50,14 @@ public class UserProgram {
     @Column(name = "is_started")
     private Boolean isStarted;
 
+    @Column(name = "is_completed")
+    private Boolean isCompleted;
+
+    private Integer weeks;
+
+    @Column(name = "sessions_per_week")
+    private Integer sessionsPerWeek;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_program_id")
     private List<ProgramSession> sessions;
