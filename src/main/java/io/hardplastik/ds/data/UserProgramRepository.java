@@ -7,11 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import io.hardplastik.ds.model.UserProgram;
+import io.hardplastik.ds.model.projections.UserProgramProjection;
 
 @Repository
 public interface UserProgramRepository extends JpaRepository<UserProgram, UUID> {
     
 
-    List<UserProgram> findByUserIdOrderByEnrollDatetimeDesc(UUID userId);
+    List<UserProgramProjection> findByUserIdOrderByEnrollDatetimeDesc(UUID userId);
 
 }

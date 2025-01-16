@@ -23,6 +23,7 @@ import io.hardplastik.ds.data.UserProgramRepository;
 import io.hardplastik.ds.model.Account;
 import io.hardplastik.ds.model.ProgramTemplate;
 import io.hardplastik.ds.model.UserProgram;
+import io.hardplastik.ds.model.projections.UserProgramProjection;
 import io.hardplastik.ds.service.UserProgramService;
 import jakarta.transaction.Transactional;
 
@@ -61,7 +62,7 @@ public class UserProgramController {
     }
 
     @GetMapping("/users/{userId}/programs")
-    public List<UserProgram> listProgramsByUserId(@PathVariable UUID userId) {
+    public List<UserProgramProjection> listProgramsByUserId(@PathVariable UUID userId) {
         return userProgramRepository.findByUserIdOrderByEnrollDatetimeDesc(userId);
     }
     
