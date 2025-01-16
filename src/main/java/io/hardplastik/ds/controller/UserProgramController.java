@@ -3,7 +3,6 @@ package io.hardplastik.ds.controller;
 import java.util.List;
 import java.util.UUID;
 
-import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
