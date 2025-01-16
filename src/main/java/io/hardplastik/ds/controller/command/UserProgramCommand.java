@@ -21,6 +21,8 @@ public class UserProgramCommand {
 
     private UUID accountId;
 
+    private String name;
+
     private List<ProgramSessionCommand> sessions;
 
     public UserProgram toEntity() {
@@ -28,6 +30,7 @@ public class UserProgramCommand {
         UserProgram userProgram = new UserProgram();
 
         userProgram.setUser(new Account(accountId));
+        userProgram.setName(name);
         userProgram.setEnrollDatetime(LocalDateTime.now());
         userProgram.setIsStarted(false);
         userProgram.setSessions(sessions

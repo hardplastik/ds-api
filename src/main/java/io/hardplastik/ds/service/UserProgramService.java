@@ -21,7 +21,7 @@ public class UserProgramService {
 
     public UserProgram createProgramForUser(UUID accountId, ProgramTemplate programTemplate) {
         
-        UserProgram userProgram = initializeUserProgram(accountId);
+        UserProgram userProgram = initializeUserProgram(accountId, programTemplate.getName());
 
         programTemplate.getSessions()
         .forEach(templateSession -> {
@@ -49,13 +49,14 @@ public class UserProgramService {
 
     }
 
-    private UserProgram initializeUserProgram(UUID accountId) {
+    private UserProgram initializeUserProgram(UUID accountId, String name) {
 
         UserProgram userProgram = new UserProgram();
         userProgram.setUser(new Account(accountId));
         userProgram.setEnrollDatetime(LocalDateTime.now());
         userProgram.setIsStarted(false);
         userProgram.setSessions(new ArrayList<>());
+        userProgram.setName(name);
         return userProgram;
 
     }

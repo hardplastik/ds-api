@@ -3,7 +3,9 @@ package io.hardplastik.ds.controller;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +25,11 @@ import io.hardplastik.ds.model.Account;
 import io.hardplastik.ds.model.ProgramTemplate;
 import io.hardplastik.ds.model.UserProgram;
 import io.hardplastik.ds.service.UserProgramService;
-
 import jakarta.transaction.Transactional;
 
+
 @RestController
-@RequestMapping("/programs")
+@RequestMapping("")
 public class UserProgramController {
 
     @Autowired
@@ -42,25 +44,30 @@ public class UserProgramController {
     @Autowired
     private UserProgramService userProgramService;
 
-    @GetMapping("")
+    @GetMapping("/programs")
     public List<UserProgram> getAllUserPrograms() {
-        return userProgramRepository.findAll();
+        return userProgramRepository.findAll(Sort.by(new Sort.Order(Sort.Direction.DESC, "enrollDatetime")));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/programs/{id}")
     public UserProgram getUserProgramById(@PathVariable UUID id) {
         return userProgramRepository.findById(id).orElse(null);
     }
 
     @Transactional
-    @PostMapping("")
+    @PostMapping("/programs")
     public UserProgram createUserProgram(@RequestBody UserProgramCommand command) {
         UserProgram userProgram = command.toEntity();
         return userProgramRepository.save(userProgram);
     }
 
+    @GetMapping("/users/{userId}/programs")
+    public List<UserProgram> listProgramsByUserId(@PathVariable UUID userId) {
+        return userProgramRepository.findByUserIdOrderByEnrollDatetimeDesc(userId);
+    }
+    
     @Transactional
-    @PostMapping("/{templateId}/program")
+    @PostMapping("/templates/{templateId}/program")
     public UserProgram addProgramToUserProgram(@PathVariable UUID templateId, @RequestBody CreatedUserProgram command) {
 
         ProgramTemplate programTemplate = programTemplateRepository.findById(templateId)

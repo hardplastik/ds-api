@@ -37,6 +37,8 @@ public class UserProgram {
     @Column(name = "user_program_id")
     private UUID id;
 
+    private String name;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
@@ -45,7 +47,7 @@ public class UserProgram {
     @Column(name = "enroll_datetime")
     private LocalDateTime enrollDatetime;
 
-    @Column(name = "program_status")
+    @Column(name = "is_started")
     private Boolean isStarted;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
