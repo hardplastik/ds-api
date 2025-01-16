@@ -29,7 +29,7 @@ public class UserProgramCommand {
 
         userProgram.setUser(new Account(accountId));
         userProgram.setEnrollDatetime(LocalDateTime.now());
-        userProgram.setProgramStatus(false);
+        userProgram.setIsStarted(false);
         userProgram.setSessions(sessions
             .stream()
             .map(session -> session.toEntity(userProgram))
@@ -46,7 +46,7 @@ public class UserProgramCommand {
 
         private Integer weekDay;
 
-        private List<ProgramSessionExerciseCommand> sessions;
+        private List<ProgramSessionExerciseCommand> exercises;
 
         public ProgramSession toEntity(UserProgram userProgram) {
             ProgramSession session = new ProgramSession();
@@ -55,7 +55,7 @@ public class UserProgramCommand {
             session.setWeekNumber(weekNumber);
             session.setWeekDay(weekDay);
             session.setPsStatus(false);
-            session.setExercises(sessions
+            session.setExercises(exercises
                 .stream()
                 .map(exercise -> exercise.toEntity(session))
                 .collect(Collectors.toList())

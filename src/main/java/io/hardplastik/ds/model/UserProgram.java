@@ -46,7 +46,7 @@ public class UserProgram {
     private LocalDateTime enrollDatetime;
 
     @Column(name = "program_status")
-    private Boolean programStatus;
+    private Boolean isStarted;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_program_id")

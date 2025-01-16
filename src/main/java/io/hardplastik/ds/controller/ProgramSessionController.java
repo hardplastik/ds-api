@@ -13,7 +13,7 @@ import io.hardplastik.ds.data.ProgramSessionRepository;
 import io.hardplastik.ds.model.ProgramSession;
 
 @RestController
-@RequestMapping("/program-session")
+@RequestMapping("/program-sessions")
 public class ProgramSessionController {
 
     @Autowired

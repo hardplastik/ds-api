@@ -27,7 +27,7 @@ import io.hardplastik.ds.service.UserProgramService;
 import jakarta.transaction.Transactional;
 
 @RestController
-@RequestMapping("/user-program")
+@RequestMapping("/programs")
 public class UserProgramController {
 
     @Autowired
