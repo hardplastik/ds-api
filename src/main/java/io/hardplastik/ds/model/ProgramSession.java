@@ -57,7 +57,6 @@ public class ProgramSession {
     @Column(name = "is_completed")
     private Boolean isCompleted;
 
-    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_id")
     private List<ProgramSessionExercise> exercises;

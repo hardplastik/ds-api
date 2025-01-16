@@ -93,7 +93,7 @@ public class UserProgramCommand {
     @Setter
     public static class ProgramSessionExerciseCommand {
 
-        private UUID exerciseId;
+        private UUID id;
 
         private int orderNumber;
 
@@ -105,7 +105,7 @@ public class UserProgramCommand {
             ProgramSessionExercise exercise = new ProgramSessionExercise();
 
             exercise.setSession(session);
-            exercise.setExercise(new CatExercise(exerciseId));
+            exercise.setExercise(new CatExercise(id));
             exercise.setOrderNumber(orderNumber);
             exercise.setNotes(notes);
             exercise.setIsCompleted(Boolean.FALSE);
