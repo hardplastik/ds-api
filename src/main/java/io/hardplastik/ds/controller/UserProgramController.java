@@ -61,7 +61,7 @@ public class UserProgramController {
         return userProgramRepository.save(userProgram);
     }
 
-    @GetMapping("/users/{userId}/programs")
+    @GetMapping("/clients/{userId}/programs")
     public List<UserProgramProjection> listProgramsByUserId(@PathVariable UUID userId) {
         return userProgramRepository.findByUserIdOrderByEnrollDatetimeDesc(userId);
     }
