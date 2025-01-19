@@ -16,13 +16,15 @@ public class UserCommand {
 
     private String password;
 
+    private Boolean isTrainer;
+
     public Account toEntity() {
         Account account = new Account();
         account.setUsername(username);
         account.setName(name);
         account.setLastName(lastName);
         account.setDeleted(Boolean.FALSE);
-        account.setIsTrainer(Boolean.TRUE);
+        account.setIsTrainer(isTrainer);
         return account;
     }
 
