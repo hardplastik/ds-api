@@ -28,6 +28,7 @@ import io.hardplastik.ds.service.UserProgramService;
 import jakarta.transaction.Transactional;
 
 
+
 @RestController
 @RequestMapping("")
 public class UserProgramController {
@@ -51,7 +52,8 @@ public class UserProgramController {
 
     @GetMapping("/programs/{id}")
     public UserProgram getUserProgramById(@PathVariable UUID id) {
-        return userProgramRepository.findById(id).orElse(null);
+        return userProgramRepository.findById(id)
+            .orElseThrow(() -> new NotFoundException("user program not found"));
     }
 
     @Transactional
