@@ -22,6 +22,7 @@ public class UserCommand {
         account.setName(name);
         account.setLastName(lastName);
         account.setDeleted(Boolean.FALSE);
+        account.setIsTrainer(Boolean.TRUE);
         return account;
     }
 
