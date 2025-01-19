@@ -113,9 +113,10 @@ public class Account implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
+        return roles != null ? roles.stream()
             .map(role -> new SimpleGrantedAuthority(role.getRole().getName()))
-            .collect(Collectors.toList());
+            .collect(Collectors.toList())
+            : List.of();
     }
 
     @Override
