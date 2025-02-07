@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 
 import io.hardplastik.ds.model.enums.Goal;
 import io.hardplastik.ds.model.enums.Intensity;
@@ -45,7 +45,7 @@ public class UserProgram {
 
     private String name;
 
-    @JsonIgnore
+    @JsonIncludeProperties(value = {"id", "name", "lastName", "isTrainer"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id")
     private Account user;
