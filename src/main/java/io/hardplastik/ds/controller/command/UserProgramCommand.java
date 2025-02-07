@@ -2,7 +2,6 @@ package io.hardplastik.ds.controller.command;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -12,6 +11,10 @@ import io.hardplastik.ds.model.ProgramSessionExercise;
 import io.hardplastik.ds.model.ProgramSessionExerciseSet;
 import io.hardplastik.ds.model.UserProgram;
 import io.hardplastik.ds.model.catalogs.CatExercise;
+import io.hardplastik.ds.model.enums.Goal;
+import io.hardplastik.ds.model.enums.Intensity;
+import io.hardplastik.ds.model.enums.Methodology;
+import io.hardplastik.ds.model.enums.Phase;
 import io.hardplastik.ds.model.enums.WeightUnit;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,44 +24,80 @@ import lombok.Setter;
 public class UserProgramCommand {
 
     private UUID accountId;
-
     private String name;
-
+    private Phase phase;
+    private Goal goal;
+    private Methodology methodology;
+    private Intensity intensity;
+    private Integer highSeries;
+    private Integer lowSeries;
+    private Integer minReps;
+    private Integer maxReps;
+    private Integer rirMin;
+    private Integer rirMax;
     private List<ProgramSessionCommand> sessions;
 
     public UserProgram toEntity() {
-
         UserProgram userProgram = new UserProgram();
 
         userProgram.setUser(new Account(accountId));
         userProgram.setName(name);
         userProgram.setEnrollDatetime(LocalDateTime.now());
-        userProgram.setIsStarted(Boolean.FALSE);
-        userProgram.setIsCompleted(Boolean.FALSE);
-        
-        Integer weeks = sessions.stream()
-            .map(ProgramSessionCommand::getWeekNumber)
-            .reduce(0, (a, b) -> a > b ? a : b);
-        
+        userProgram.setIsStarted(false);
+        userProgram.setIsCompleted(false);
+
+        userProgram.setPhase(phase);
+        userProgram.setGoal(goal);
+        userProgram.setMethodology(methodology);
+        userProgram.setIntensity(intensity);
+        userProgram.setHighSeries(highSeries);
+        userProgram.setLowSeries(lowSeries);
+
+        calculateMinMaxRepsAndRir(userProgram);
+        userProgram.setMinReps(minReps);
+        userProgram.setMaxReps(maxReps);
+        userProgram.setRirMin(rirMin);
+        userProgram.setRirMax(rirMax);
+
+        int weeks = sessions.stream().mapToInt(ProgramSessionCommand::getWeekNumber).max().orElse(0);
         userProgram.setWeeks(weeks);
 
-        Map<Integer, List<ProgramSessionCommand>> weeksSessions = sessions
-            .stream()
-            .collect(Collectors.groupingBy(ProgramSessionCommand::getWeekNumber));
-
-        Integer sessionsPerWeek = weeksSessions
-            .keySet()
-            .stream()
-            .reduce(0, (a, key) -> a > weeksSessions.get(key).size() ? a : weeksSessions.get(key).size());
-        
+        int sessionsPerWeek = sessions.stream()
+            .collect(Collectors.groupingBy(ProgramSessionCommand::getWeekNumber, Collectors.counting()))
+            .values().stream()
+            .mapToInt(Long::intValue)
+            .max()
+            .orElse(0);
         userProgram.setSessionsPerWeek(sessionsPerWeek);
 
-        userProgram.setSessions(sessions
-            .stream()
-            .map(session -> session.toEntity(userProgram))
-            .collect(Collectors.toList()));
+        userProgram.setSessions(
+            sessions.stream().map(session -> session.toEntity(userProgram)).collect(Collectors.toList())
+        );
 
         return userProgram;
+    }
+
+    private void calculateMinMaxRepsAndRir(UserProgram userProgram) {
+        int minRepsCalculated = Integer.MAX_VALUE;
+        int maxRepsCalculated = Integer.MIN_VALUE;
+        int rirMinCalculated = Integer.MAX_VALUE;
+        int rirMaxCalculated = Integer.MIN_VALUE;
+
+        for (ProgramSessionCommand sessionCommand : sessions) {
+            for (ProgramSessionExerciseCommand exerciseCommand : sessionCommand.getExercises()) {
+                for (ProgramSessionExerciseSetCommand setCommand : exerciseCommand.getSets()) {
+                    minRepsCalculated = Math.min(minRepsCalculated, setCommand.getMinReps());
+                    maxRepsCalculated = Math.max(maxRepsCalculated, setCommand.getMaxReps());
+                    rirMinCalculated = Math.min(rirMinCalculated, setCommand.getRirMin());
+                    rirMaxCalculated = Math.max(rirMaxCalculated, setCommand.getRirMax());
+                }
+            }
+        }
+
+        this.minReps = (minRepsCalculated == Integer.MAX_VALUE) ? null : minRepsCalculated;
+        this.maxReps = (maxRepsCalculated == Integer.MIN_VALUE) ? null : maxRepsCalculated;
+        this.rirMin = (rirMinCalculated == Integer.MAX_VALUE) ? null : rirMinCalculated;
+        this.rirMax = (rirMaxCalculated == Integer.MIN_VALUE) ? null : rirMaxCalculated;
     }
 
     @Getter
@@ -66,9 +105,7 @@ public class UserProgramCommand {
     public static class ProgramSessionCommand {
 
         private Integer weekNumber;
-
         private Integer weekDay;
-
         private List<ProgramSessionExerciseCommand> exercises;
 
         public ProgramSession toEntity(UserProgram userProgram) {
@@ -77,16 +114,16 @@ public class UserProgramCommand {
             session.setUserProgram(userProgram);
             session.setWeekNumber(weekNumber);
             session.setWeekDay(weekDay);
-            session.setIsCompleted(Boolean.FALSE);
-            session.setExercises(exercises
-                .stream()
-                .map(exercise -> exercise.toEntity(session))
-                .collect(Collectors.toList())
-            );
-            
+            session.setIsCompleted(false);
+
+            if (exercises != null) {
+                session.setExercises(
+                    exercises.stream().map(exercise -> exercise.toEntity(session)).collect(Collectors.toList())
+                );
+            }
+
             return session;
         }
-        
     }
 
     @Getter
@@ -94,11 +131,8 @@ public class UserProgramCommand {
     public static class ProgramSessionExerciseCommand {
 
         private UUID id;
-
         private int orderNumber;
-
         private String notes;
-
         private List<ProgramSessionExerciseSetCommand> sets;
 
         public ProgramSessionExercise toEntity(ProgramSession session) {
@@ -108,53 +142,46 @@ public class UserProgramCommand {
             exercise.setExercise(new CatExercise(id));
             exercise.setOrderNumber(orderNumber);
             exercise.setNotes(notes);
-            exercise.setIsCompleted(Boolean.FALSE);
-            exercise.setSets(sets
-                .stream()
-                .map(set -> set.toEntity(exercise))
-                .collect(Collectors.toList())
-            );
+            exercise.setIsCompleted(false);
+
+            if (sets != null) {
+                exercise.setSets(
+                    sets.stream().map(set -> set.toEntity(exercise)).collect(Collectors.toList())
+                );
+            }
+
             return exercise;
         }
-
     }
 
     @Getter
     @Setter
     public static class ProgramSessionExerciseSetCommand {
 
-        private Integer reps;
-
-        private String targetReps;
-
-        private Float weight;
-
         private Float targetWeight;
-
+        private Integer minReps;
+        private Integer maxReps;
+        private Integer rirMin;
+        private Integer rirMax;
         private Integer rpe;
-
         private WeightUnit unit;
-
         private Integer orderNumber;
 
         public ProgramSessionExerciseSet toEntity(ProgramSessionExercise exercise) {
-            
             ProgramSessionExerciseSet set = new ProgramSessionExerciseSet();
-            
+
             set.setExercise(exercise);
-            set.setReps(reps);
-            set.setTargetReps(targetReps);
-            set.setWeight(weight);
             set.setTargetWeight(targetWeight);
             set.setRpe(rpe);
             set.setUnit(unit);
             set.setOrderNumber(orderNumber);
-            set.setIsCompleted(Boolean.FALSE);
-            
+            set.setIsCompleted(false);
+            set.setMinReps(minReps);
+            set.setMaxReps(maxReps);
+            set.setRirMin(rirMin);
+            set.setRirMax(rirMax);
+
             return set;
         }
-
     }
-
-    
 }

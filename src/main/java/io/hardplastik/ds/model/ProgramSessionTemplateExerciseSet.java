@@ -38,8 +38,17 @@ public class ProgramSessionTemplateExerciseSet implements Serializable {
     @JoinColumn(name = "program_session_template_exercise_id")
     private ProgramSessionTemplateExercise exercise;
 
-    @Column(name = "target_reps")
-    private String targetReps;
+    @Column(name = "min_reps")
+    private Integer minReps;
+
+    @Column(name = "max_reps")
+    private Integer maxReps;
+
+    @Column(name = "rir_min")
+    private Integer rirMin;
+
+    @Column(name = "rir_max")
+    private Integer rirMax;
 
     @Column(name = "target_weight")
     private Float targetWeight;

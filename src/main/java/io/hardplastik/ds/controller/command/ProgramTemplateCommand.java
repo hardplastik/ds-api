@@ -102,10 +102,18 @@ public class ProgramTemplateCommand {
 
         private Integer orderNumber;
 
+        private Integer minReps;
+        private Integer maxReps;
+        private Integer rirMin;
+        private Integer rirMax;
+
         public ProgramSessionTemplateExerciseSet toEntity(ProgramSessionTemplateExercise exercise) {
             ProgramSessionTemplateExerciseSet set = new ProgramSessionTemplateExerciseSet();
             set.setExercise(exercise);
-            set.setTargetReps(targetReps);
+            set.setMinReps(minReps);
+            set.setMaxReps(maxReps);
+            set.setRirMin(rirMin);
+            set.setRirMax(rirMax);
             set.setTargetWeight(targetWeight);
             set.setRpe(rpe);
             set.setUnit(unit);

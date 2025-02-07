@@ -72,6 +72,8 @@ public class UserProgramService {
         session.setWeekDay(templateSession.getWeekDay());
         session.setIsCompleted(Boolean.FALSE);
         session.setExercises(new ArrayList<>());
+        session.setStartDatetime(null);
+        session.setEndDatetime(null);
         return session;
     }
 
@@ -93,13 +95,17 @@ public class UserProgramService {
         ProgramSessionExerciseSet set = new ProgramSessionExerciseSet();
         set.setExercise(sessionExercise);
         set.setReps(null);
-        set.setTargetReps(templateSet.getTargetReps());
         set.setWeight(null);
         set.setTargetWeight(templateSet.getTargetWeight());
         set.setRpe(templateSet.getRpe());
         set.setUnit(templateSet.getUnit());
         set.setOrderNumber(templateSet.getOrderNumber());
         set.setIsCompleted(Boolean.FALSE);
+        set.setMinReps(templateSet.getMinReps());
+        set.setMaxReps(templateSet.getMaxReps());
+        set.setRirMin(templateSet.getRirMin());
+        set.setRirMax(templateSet.getRirMax());
+
         return set;
 
     }

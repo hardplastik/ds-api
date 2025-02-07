@@ -8,9 +8,15 @@ import org.hibernate.annotations.UuidGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.hardplastik.ds.model.enums.Goal;
+import io.hardplastik.ds.model.enums.Intensity;
+import io.hardplastik.ds.model.enums.Methodology;
+import io.hardplastik.ds.model.enums.Phase;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -57,9 +63,42 @@ public class UserProgram {
 
     @Column(name = "sessions_per_week")
     private Integer sessionsPerWeek;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "phase")
+    private Phase phase;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "goal")
+    private Goal goal;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "methodology")
+    private Methodology methodology;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "intensity")
+    private Intensity intensity;
+
+    @Column(name = "high_series")
+    private Integer highSeries;
+
+    @Column(name = "low_series")
+    private Integer lowSeries;
+
+    @Column(name = "min_reps")
+    private Integer minReps;
+
+    @Column(name = "max_reps")
+    private Integer maxReps;
+
+    @Column(name = "rir_min")
+    private Integer rirMin;
+
+    @Column(name = "rir_max")
+    private Integer rirMax;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_program_id")
     private List<ProgramSession> sessions;
-    
 }
