@@ -1,24 +1,24 @@
 server:
-  port: 8080
+  port: ${SERVER_PORT:8080}
   servlet:
-    context-path: "/api"
+    context-path: ${SERVER_CONTEXT_PATH:/api}
 
 spring:
   security:
     jwt:
-      secret-key: 65beba6603e2832600884258b802c77b03842caffb88ddba414dca6221d83a3b
-      expiration-time: 525960
+      secret-key: ${JWT_SECRET_KEY:65beba6603e2832600884258b802c77b03842caffb88ddba414dca6221d83a3b}
+      expiration-time: ${JWT_EXPIRATION_TIME:525960}
   application:
-    name: ds-service
+    name: ${SPRING_APPLICATION_NAME:ds-service}
   jackson:
     serialization:
       write-dates-as-timestamps: false
-    time-zone: America/Tijuana
+    time-zone: ${SPRING_JACKSON_TIMEZONE:America/Tijuana}
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5432/postgres
-    username: admin
-    password: password
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://127.0.0.1:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:admin}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
   jpa:
     open-in-view: true
     show-sql: false
@@ -28,10 +28,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
-      hibernate.jdbc.time_zone: America/Tijuana
+      hibernate.jdbc.time_zone: ${SPRING_JPA_TIMEZONE:America/Tijuana}
 
   servlet:
     session:
       cookie:
         http-only: true
-        secure: false
+        secure: ${SPRING_SESSION_COOKIE_SECURE:false}

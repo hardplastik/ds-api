@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.4.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.google.cloud.tools.jib' version '3.4.4'
 }
 
 group = 'io.hardplastik'
@@ -22,6 +23,37 @@ configurations {
 repositories {
 	mavenCentral()
 }
+
+jib {
+	from {
+		image = 'eclipse-temurin:17.0.14_7-jre-alpine'
+	}
+	to {
+		image = 'hardplastik/ds-api'
+		tags = ['latest']
+	}
+	container {
+		jvmFlags = [
+			'-Xms512m', '-Xmx512m',
+			'-XX:+UseContainerSupport',
+			'-XX:MaxRAMPercentage=75.0',
+			'-XX:+UseG1GC',
+			'-XX:MaxGCPauseMillis=200',
+			'-XX:+AlwaysPreTouch',
+			'-XX:+ParallelRefProcEnabled',
+			'-Djava.security.egd=file:/dev/urandom'
+		]
+		creationTime = 'USE_CURRENT_TIMESTAMP'
+	}
+}
+
+tasks.register('build-local') {
+	description = 'Builds the docker image locally'
+	group = 'build'
+	doLast {}
+	dependsOn('jibDockerBuild');
+}
+
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
