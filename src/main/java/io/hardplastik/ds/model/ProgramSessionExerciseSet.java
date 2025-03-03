@@ -33,8 +33,8 @@ public class ProgramSessionExerciseSet {
     private UUID id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "program_session_exercise_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "program_session_exercise_id", nullable = false)
     private ProgramSessionExercise exercise;
 
     @Column(name = "reps")

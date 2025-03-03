@@ -1,7 +1,7 @@
 package io.hardplastik.ds.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -56,7 +56,7 @@ public class UserProgramService {
         userProgram.setEnrollDatetime(LocalDateTime.now());
         userProgram.setIsStarted(Boolean.FALSE);
         userProgram.setIsCompleted(Boolean.FALSE);
-        userProgram.setSessions(new ArrayList<>());
+        userProgram.setSessions(new HashSet<>());
         userProgram.setName(programTemplate.getName());
         userProgram.setWeeks(programTemplate.getWeeks());
         userProgram.setSessionsPerWeek(programTemplate.getSessionsPerWeek());
@@ -71,7 +71,7 @@ public class UserProgramService {
         session.setWeekNumber(templateSession.getWeekNumber());
         session.setWeekDay(templateSession.getWeekDay());
         session.setIsCompleted(Boolean.FALSE);
-        session.setExercises(new ArrayList<>());
+        session.setExercises(new HashSet<>());
         session.setStartDatetime(null);
         session.setEndDatetime(null);
         return session;
@@ -85,7 +85,7 @@ public class UserProgramService {
         sessionExercise.setOrderNumber(templateExercise.getOrderNumber());
         sessionExercise.setNotes(templateExercise.getNotes());
         sessionExercise.setIsCompleted(Boolean.FALSE);
-        sessionExercise.setSets(new ArrayList<>());
+        sessionExercise.setSets(new HashSet<>());
         return sessionExercise;
     }
     

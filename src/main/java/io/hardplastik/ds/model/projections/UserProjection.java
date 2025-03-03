@@ -2,8 +2,6 @@ package io.hardplastik.ds.model.projections;
 
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-
 public interface UserProjection {
   
   UUID getId();
@@ -15,8 +13,5 @@ public interface UserProjection {
   String getLastName();
 
   String getIsTrainer();
-
-  @JsonUnwrapped
-  CustomerProjection getCustomer();
 
 }

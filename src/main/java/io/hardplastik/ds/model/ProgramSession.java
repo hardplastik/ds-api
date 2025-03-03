@@ -1,7 +1,7 @@
 package io.hardplastik.ds.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -38,8 +38,8 @@ public class ProgramSession {
     private UUID id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "user_program_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name= "user_program_id", nullable = false)
     private UserProgram userProgram;
 
     @Column(name = "week_number")
@@ -59,6 +59,6 @@ public class ProgramSession {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_id")
-    private List<ProgramSessionExercise> exercises;
+    private Set<ProgramSessionExercise> exercises;
     
 }

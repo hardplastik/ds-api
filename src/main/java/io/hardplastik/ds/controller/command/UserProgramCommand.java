@@ -71,7 +71,7 @@ public class UserProgramCommand {
         userProgram.setSessionsPerWeek(sessionsPerWeek);
 
         userProgram.setSessions(
-            sessions.stream().map(session -> session.toEntity(userProgram)).collect(Collectors.toList())
+            sessions.stream().map(session -> session.toEntity(userProgram)).collect(Collectors.toSet())
         );
 
         return userProgram;
@@ -118,7 +118,7 @@ public class UserProgramCommand {
 
             if (exercises != null) {
                 session.setExercises(
-                    exercises.stream().map(exercise -> exercise.toEntity(session)).collect(Collectors.toList())
+                    exercises.stream().map(exercise -> exercise.toEntity(session)).collect(Collectors.toSet())
                 );
             }
 
@@ -146,7 +146,7 @@ public class UserProgramCommand {
 
             if (sets != null) {
                 exercise.setSets(
-                    sets.stream().map(set -> set.toEntity(exercise)).collect(Collectors.toList())
+                    sets.stream().map(set -> set.toEntity(exercise)).collect(Collectors.toSet())
                 );
             }
 

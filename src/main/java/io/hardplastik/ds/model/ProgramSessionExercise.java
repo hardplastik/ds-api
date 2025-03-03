@@ -1,7 +1,7 @@
 package io.hardplastik.ds.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.UuidGenerator;
@@ -37,13 +37,13 @@ public class ProgramSessionExercise implements Serializable {
     private UUID id;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "program_session_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "program_session_id", nullable = false)
     private ProgramSession session;
     
     @JsonUnwrapped
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exercise_id")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "exercise_id", nullable = false)
     private CatExercise exercise;
 
     @Column(name = "order_number")
@@ -57,5 +57,5 @@ public class ProgramSessionExercise implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "program_session_exercise_id")
-    private List<ProgramSessionExerciseSet> sets;
+    private Set<ProgramSessionExerciseSet> sets;
 }

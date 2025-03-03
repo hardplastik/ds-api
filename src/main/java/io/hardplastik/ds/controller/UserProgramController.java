@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,12 +26,13 @@ import io.hardplastik.ds.model.ProgramTemplate;
 import io.hardplastik.ds.model.UserProgram;
 import io.hardplastik.ds.model.projections.UserProgramProjection;
 import io.hardplastik.ds.service.UserProgramService;
-import jakarta.transaction.Transactional;
+
 
 
 
 @RestController
 @RequestMapping("")
+@Transactional(readOnly = true)
 public class UserProgramController {
 
     @Autowired
@@ -56,6 +58,12 @@ public class UserProgramController {
             .orElseThrow(() -> new NotFoundException("user program not found"));
     }
 
+    @GetMapping("/clients/{userId}/current-program")
+    public UserProgram getMethodName(@PathVariable UUID userId) {
+        return userProgramRepository.findTopByUserIdOrderByEnrollDatetimeDesc(userId)
+            .orElseThrow(() -> new NotFoundException("No current program found"));
+    }
+    
     @Transactional
     @PostMapping("/programs")
     public UserProgram createUserProgram(@RequestBody UserProgramCommand command) {
