@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.hardplastik.ds.model.Account;
 
-
 @RestController
 @RequestMapping("/me")
 public class MeController {
@@ -15,6 +14,4 @@ public class MeController {
     public Account me(Account currentUser) {
         return currentUser;
     }
-    
-
 }
